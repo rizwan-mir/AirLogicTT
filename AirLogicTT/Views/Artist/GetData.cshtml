@@ -1,0 +1,55 @@
+﻿@model AirLogicTT.Models.Artist
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Air Logic Technical Test</h2>
+    Average Number of words per song @Model.Avg<br />
+    Minimum number of words per song @Model.MinWords<br />
+    Maximum number of words per song @Model.MaxWords<br />
+    Range @Model.Range<br />
+    Variance @Model.Var<br />
+    Standard Deviation @Model.StdDev<br />
+
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js">
+    </script>
+
+    <script type="text/javascript">
+        var songs = @Html.Raw(Json.Encode(Model.Songs));
+        var i;
+
+		var dataPoints = [];
+		for (i = 0; i < songs.length; i++) {
+		var song = songs[i];
+		dataPoints.push({ label: song.Name, y: song.WordCount})
+		}
+        window.onload = function () {
+            var chart = new CanvasJS.Chart("chartContainer", {
+				axisX:{
+					title: "Song Title"
+                },
+                axisY: {
+                    title: "Number of Words"
+                },
+                theme: "theme2",
+                animationEnabled: true,
+                title: {
+                    text: "Number of words in lyrics from @Model.ArtistName"
+                },
+
+                data: [
+                    {
+                        // change type to bar, line, area, pie, etc.
+                        type: "bar",
+                        dataPoints: dataPoints
+                    }
+                ]
+            });
+            chart.render();
+        };
+    </script>
+
+    <div id="chartContainer"></div>
+    </div>
+

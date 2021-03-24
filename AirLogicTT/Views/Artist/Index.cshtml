@@ -1,0 +1,14 @@
+﻿@model AirLogicTT.Models.Artist
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("GetDataAsync", "Artist", FormMethod.Post))
+{
+<div class="container">
+    <h2>Air Logic Technical Test</h2><p>
+    Enter a Group/Artist name: 
+    @Html.TextBoxFor(model => model.ArtistName)
+    @Html.ValidationMessageFor(model => model.ArtistName)
+    <button type="submit">Find Songs</button></p>
+</div>
+}
